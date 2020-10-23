@@ -17,25 +17,17 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
-    public User create(RegistrationDto registrationDto) {
-        User user = new User(
-                registrationDto.getFirstName(),
-                registrationDto.getLastName(),
-                registrationDto.getEmail(),
-                registrationDto.getPassword()
-        );
+    public User create(User user) {
         return userRepository.save(user);
     }
 
     @Override
-    public User update(RegistrationDto registrationDto) {
-        User user = userRepository.findById(registrationDto.getId()).orElse(null);
-        //TODO: Add null check...
-        user.setFirstName(registrationDto.getFirstName());
-        user.setLastName(registrationDto.getLastName());
-        user.setEmail(registrationDto.getEmail());
-        user.setPassword(registrationDto.getPassword());
-        return userRepository.save(user);
+    public User update(User userEntity, User user) {
+        userEntity.setFirstName(user.getFirstName());
+        userEntity.setLastName(user.getLastName());
+        userEntity.setEmail(user.getEmail());
+        userEntity.setPassword(user.getPassword());
+        return userRepository.save(userEntity);
     }
 
     @Override
@@ -50,6 +42,11 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    @Override
     public User findById(Long id) {
         //TODO: Can return null so either create new User or give proper warning.
         return userRepository.findById(id).orElse(null);
@@ -58,5 +55,15 @@ public class RegistrationServiceImpl implements RegistrationService {
     @Override
     public List<User> findAllByLastName(String lastName) {
         return userRepository.findAllByLastName(lastName);
+    }
+
+    @Override
+    public User initializeUserAndBindDtoData(RegistrationDto registrationDto) {
+        return new User(
+                registrationDto.getFirstName(),
+                registrationDto.getLastName(),
+                registrationDto.getEmail(),
+                registrationDto.getPassword()
+        );
     }
 }
