@@ -13,4 +13,6 @@ export class AppComponent implements OnInit {
     console.log('Angular has been loaded and has served the correct HTML page');
   }
 
+
+
 }
