@@ -3,13 +3,26 @@ services:
         mysql:
                 image: "mysql:latest"
                 restart: always
-                ports:
-                        - "3306:3306"
+
                 volumes:
                     - "mydata:/var/lib/mysql"
                 network_mode: bridge
                 environment:
-                    MYSQL_ROOT_PASSWORD: root    
+                    MYSQL_ROOT_PASSWORD: root
+        backend:
+                image: "bschaaf/hello-backend:0.1"
+                network_mode: bridge
+                links:
+                        - "mysql:db-server"
+                depends_on:
+                        - mysql
+        frontend:
+                image: "bschaaf/hello-frontend:0.1"
+                ports:
+                        - "90:80"
+                network_mode: bridge
+                links:
+                        - "backend:backend-server"
 
 volumes:
         mydata: {}
