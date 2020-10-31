@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {User} from "./user";
-import {Observable, of} from "rxjs";
-import {catchError, tap} from "rxjs/operators";
+import {Observable, of, Subject} from "rxjs";
+import {catchError} from "rxjs/operators";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Injectable({
@@ -15,6 +15,10 @@ export class UserService {
   //The 'proxy' part of the URL is resolved by the proxy.conf.json file when starting the server in developer mode (using npm start)
   //this may need to be changed when the app is running in production mode
   private url = "proxy/registration/users";
+
+
+  public addUserSource$: Subject<User> = new Subject();
+
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
