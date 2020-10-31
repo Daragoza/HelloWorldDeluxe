@@ -1,0 +1,59 @@
+<form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
+  <div class="example-container">
+    <mat-form-field appearance="fill">
+      <mat-label>First Name</mat-label>
+      <input id="firstName" matInput formControlName="firstName" required minlength="2">
+    </mat-form-field>
+
+    <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="alert alert-danger">
+      <div *ngIf="firstName.errors.required">
+        First Name is required.
+      </div>
+      <div *ngIf="firstName.errors.minlength">
+        Name must be at least 4 characters long.
+      </div>
+      <div *ngIf="firstName.errors.forbiddenName">
+        The illegal name 'Koen' is not allowed ;)
+      </div>
+    </div>
+
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>last Name</mat-label>
+      <input matInput formControlName="lastName" required>
+      <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="alert alert-danger">
+        <div *ngIf="lastName.errors.required">
+          Last Name is required.
+        </div>
+      </div>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" required type="email">
+      <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+        <div *ngIf="email.errors.required">
+          Email is required.
+        </div>
+        <div *ngIf="email.errors.email">
+          Please enter a valid email.
+        </div>
+      </div>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" required type="password" minlength="8">
+      <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
+        <div *ngIf="password.errors.required">
+          Password is required.
+        </div>
+        <div *ngIf="password.errors.minlength">
+          Password must be at least 8 characters long.
+        </div>
+      </div>
+    </mat-form-field>
+    <br>
+  </div>
+  <button mat-button color="primary" type="submit" [disabled]="!addUserForm.valid" (submit)="onSubmit()">Add New User</button>
+</form>
